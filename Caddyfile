@@ -3,5 +3,5 @@
     encode gzip
 
     file_server
-    php_fastcgi unix//run/php/php8.2-fpm.sock
+    php_fastcgi 127.0.0.1:9000
 }

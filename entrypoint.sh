@@ -18,5 +18,6 @@ if [ "$#" -gt 0 ]; then
             ;;
     esac
 else
+    php-fpm &
     caddy run -c /app/Caddyfile
 fi
