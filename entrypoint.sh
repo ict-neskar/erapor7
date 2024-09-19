@@ -1,5 +1,18 @@
 #!/bin/sh
 
+# Function to handle termination signals
+terminate() {
+    echo "Terminating processes..."
+    kill -TERM "$php_fpm_pid" 2>/dev/null
+    kill -TERM "$caddy_pid" 2>/dev/null
+    wait "$php_fpm_pid"
+    wait "$caddy_pid"
+    exit 0
+}
+
+# Trap SIGTERM signal
+trap terminate TERM
+
 if [ "$#" -gt 0 ]; then
     case "$1" in
         migrate)
@@ -19,5 +32,9 @@ if [ "$#" -gt 0 ]; then
     esac
 else
     php-fpm &
-    caddy run -c /app/Caddyfile
+    php_fpm_pid=$!
+    caddy run -c /app/Caddyfile &
+    caddy_pid=$!
+    wait "$php_fpm_pid"
+    wait "$caddy_pid"
 fi
