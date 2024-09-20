@@ -3,9 +3,14 @@
 # Function to handle termination signals
 terminate() {
     echo "Terminating processes..."
-    kill -TERM "$php_fpm_pid" 2>/dev/null
-    wait "$php_fpm_pid"
-    exit 0
+    if [ -n "$caddy_pid" ]; then
+        kill -TERM "$caddy_pid" 2>/dev/null
+        wait "$caddy_pid"
+    fi
+    if [ -n "$php_fpm_pid" ]; then
+        kill -TERM "$php_fpm_pid" 2>/dev/null
+        wait "$php_fpm_pid"
+    fi
 }
 
 # Trap SIGTERM signal
@@ -43,6 +48,12 @@ if [ "$#" -gt 0 ]; then
         migrate:seed)
             php artisan migrate
             php artisan db:seed
+            ;;
+        caddy)
+            shift
+            caddy "$@" &
+            caddy_pid=$!
+            wait "$caddy_pid"
             ;;
         *)
             echo "Unknown argument: $1"
