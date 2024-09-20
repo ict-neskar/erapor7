@@ -4,9 +4,7 @@
 terminate() {
     echo "Terminating processes..."
     kill -TERM "$php_fpm_pid" 2>/dev/null
-    kill -TERM "$caddy_pid" 2>/dev/null
     wait "$php_fpm_pid"
-    wait "$caddy_pid"
     exit 0
 }
 
@@ -15,6 +13,21 @@ trap terminate TERM
 
 if [ "$#" -gt 0 ]; then
     case "$1" in
+        storage:link)
+            # Check for symlink at public/storage
+            if [ ! -L "public/storage" ]; then
+                echo "Creating storage symlink..."
+                output=$(php artisan storage:link 2>&1)
+                if echo "$output" | grep -q "The \[public/storage\] link already exists."; then
+                    echo "Storage folder [public/storage] already exists hence it's not a symlink. Please delete it first before continuing"
+                    exit 0
+                elif [ $? -ne 0 ]; then
+                    echo "Failed to create storage symlink. Exiting..."
+                    echo "$output"
+                    exit 1
+                fi
+            fi
+            ;;
         migrate)
             php artisan migrate
             ;;
@@ -33,8 +46,5 @@ if [ "$#" -gt 0 ]; then
 else
     php-fpm &
     php_fpm_pid=$!
-    caddy run -c /app/Caddyfile &
-    caddy_pid=$!
     wait "$php_fpm_pid"
-    wait "$caddy_pid"
 fi
