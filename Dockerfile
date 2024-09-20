@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 # Install needed services
-RUN apk add --no-cache --update libcurl caddy libzip-dev libpng-dev postgresql-dev
+RUN apk add --no-cache --update libcurl libzip-dev libpng-dev postgresql-dev
 
 # Configure php extensions
 RUN docker-php-ext-configure zip \
