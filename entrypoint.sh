@@ -50,6 +50,7 @@ if [ "$#" -gt 0 ]; then
             php artisan db:seed
             ;;
         caddy)
+            php artisan storage:link
             shift
             caddy "$@" &
             caddy_pid=$!
@@ -61,6 +62,7 @@ if [ "$#" -gt 0 ]; then
             ;;
     esac
 else
+    php artisan storage:link
     php-fpm &
     php_fpm_pid=$!
     wait "$php_fpm_pid"
