@@ -15,7 +15,7 @@ RUN docker-php-ext-configure zip \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && cp .env.example .env \
     && mkdir -p bootstrap/cache/ storage/logs storage/framework/sessions storage/framework/views storage/framework/cache \
-    && chmod 775 -R app bootstrap storage \
+    && chmod 777 -R app bootstrap storage \
     && composer install --no-dev --optimize-autoloader \
     && rm -rf .env bootstrap/cache/*.php \
     && mkdir -p /app/storage/logs/ 
