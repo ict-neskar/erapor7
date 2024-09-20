@@ -20,12 +20,18 @@ if [ "$#" -gt 0 ]; then
                 output=$(php artisan storage:link 2>&1)
                 if echo "$output" | grep -q "The \[public/storage\] link already exists."; then
                     echo "Storage folder [public/storage] already exists hence it's not a symlink. Please delete it first before continuing"
+                    exit 1
+                elif echo "$output" | grep -q "The \[public/storage\] link has been connected to .*"; then
+                    echo "Storage symlink created successfully."
                     exit 0
                 elif [ $? -ne 0 ]; then
                     echo "Failed to create storage symlink. Exiting..."
                     echo "$output"
                     exit 1
                 fi
+            else
+                echo "Storage symlink already exists. Continuing..."
+                exit 0
             fi
             ;;
         migrate)
