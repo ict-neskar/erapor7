@@ -1,25 +1,23 @@
-FROM php:8.2-fpm-alpine
+FROM docker.io/serversideup/php:8.3-fpm-nginx-alpine
 
-WORKDIR /app
+WORKDIR /var/www/html
 
-COPY . .
+USER root
 
-# Install needed services
-RUN apk add --no-cache --update libcurl caddy libzip-dev libpng-dev postgresql-dev
+# Install the required packages
+RUN apk add --no-cache \
+    zlib-dev libpng-dev
 
-# Configure php extensions
-RUN docker-php-ext-configure zip \
-    && docker-php-ext-install gd pdo_pgsql pdo_mysql zip
+# Install the required PHP extensions
+RUN docker-php-ext-install gd
+
+USER www-data
+
+COPY --chown=www-data:www-data . .
+COPY --chmod=755 ./entrypoint.d/ /etc/entrypoint.d
 
 # Install composer and the dependencies
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && cp .env.example .env \
-    && mkdir -p bootstrap/cache/ storage/logs storage/framework/sessions storage/framework/views storage/framework/cache \
-    && chmod 777 -R app bootstrap storage \
+RUN cp .env.example .env \
     && composer install --no-dev --optimize-autoloader \
     && rm -rf .env bootstrap/cache/*.php \
-    && mkdir -p /app/storage/logs/ 
-
-RUN chmod +x /app/entrypoint.sh
-
-ENTRYPOINT [ "/bin/sh", "/app/entrypoint.sh" ]
+    && chmod -R 777 bootstrap/cache/ storage/logs storage/framework/sessions storage/framework/views storage/framework/cache
