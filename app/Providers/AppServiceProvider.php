@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $url = parse_url(url('/'));
-        if($url['scheme'] == 'https'){
+        if($url['scheme'] == 'https' || $this->app->environment('production')){
             URL::forceScheme('https');
         }
         Carbon::setLocale(LC_TIME, $this->app->getLocale());
