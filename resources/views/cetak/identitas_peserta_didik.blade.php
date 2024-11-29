@@ -162,7 +162,7 @@
 		<td style="width: 15%;padding:5px;" rowspan="5"></td>
 		@if($pas_foto != null)
         <td style="width: 15%;padding:5px;" rowspan="5" align="center">
-            <img src="{{ $pas_foto }}" width="125px" height="190px" style="object-fit: contain; object-position: center;">
+            <img src="{{ $pas_foto }}" width="130px" height="190px" style="object-fit: contain; object-position: center;">
         </td>
         @else
         <td style="width: 15%;padding:5px; border:1px solid #000000;" rowspan="5" align="center">
