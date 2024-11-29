@@ -254,7 +254,7 @@ class CetakController extends Controller
 			$pdf->getMpdf()->WriteHTML($identitas_sekolah);
 			$pdf->getMpdf()->WriteHTML('<pagebreak />');
 			$pdf->getMpdf()->WriteHTML($identitas_peserta_didik);
-			$pdf->getMpdf()->SetWatermarkImage($logo_sekolah, 0.2, array(80, 80));
+			$pdf->getMpdf()->SetWatermarkImage(asset($logo_sekolah), 0.2, array(80, 80));
 			$pdf->getMpdf()->showWatermarkImage = true;
 			return $pdf->stream($general_title.'-IDENTITAS.pdf');
 		}
