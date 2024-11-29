@@ -23,6 +23,7 @@ use App\Models\Prakerin;
 use App\Models\Absensi;
 use Carbon\Carbon;
 use PDF;
+use Storage;
 
 class CetakController extends Controller
 {
