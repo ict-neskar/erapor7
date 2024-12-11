@@ -254,9 +254,9 @@ class CetakController extends Controller
 			}
 
 			// Remove school's logo for 2022 and below
-			$tahun_ajaran_start_siswa = $get_siswa->peserta_didik->diterima ? Carbon::parse($get_siswa->peserta_didik->diterima)->format('Y') : '20'.substr($tahun_ajaran_id, 0, 2);
-			$tahun_ajaran_suffix = (int) substr($tahun_ajaran_id, 2, 2);
-			if ($tahun_ajaran_suffix <= 22) {
+			$tahun_ajaran_prefix_raw = $get_siswa->peserta_didik->diterima ? Carbon::parse($get_siswa->peserta_didik->diterima)->format('Y') : '20'.substr($tahun_ajaran_id, 0, 2);
+			$tahun_ajaran_prefix = (int) $tahun_ajaran_prefix_raw;
+			if ($tahun_ajaran_prefix <= 2022) {
 				$logo_sekolah = null;
 			}
 
