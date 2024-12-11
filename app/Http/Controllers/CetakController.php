@@ -254,7 +254,7 @@ class CetakController extends Controller
 			}
 
 			// Remove school's logo for 2022 and below
-			$tahun_ajaran_prefix_raw = $get_siswa->peserta_didik->diterima ? Carbon::parse($get_siswa->peserta_didik->diterima)->format('Y') : '20'.substr($tahun_ajaran_id, 0, 2);
+			$tahun_ajaran_prefix_raw = $get_siswa->peserta_didik->diterima ? Carbon::parse($get_siswa->peserta_didik->getAttributes()['diterima'])->format('Y') : '20'.substr($tahun_ajaran_id, 0, 2);
 			$tahun_ajaran_prefix = (int) $tahun_ajaran_prefix_raw;
 			if ($tahun_ajaran_prefix <= 2022) {
 				$logo_sekolah = null;
@@ -264,8 +264,12 @@ class CetakController extends Controller
 			$identitas_peserta_didik = view('cetak.identitas_peserta_didik', $params);
 			$pdf->getMpdf()->WriteHTML($rapor_top);
 			$pdf->getMpdf()->WriteHTML($identitas_sekolah);
-			$pdf->getMpdf()->SetWatermarkImage($logo_sekolah, 0.2, array(80, 80));
-			$pdf->getMpdf()->showWatermarkImage = true;
+			
+			if ($logo_sekolah !== null) {
+				$pdf->getMpdf()->SetWatermarkImage($logo_sekolah, 0.2, array(80, 80));
+				$pdf->getMpdf()->showWatermarkImage = true;
+			}
+
 			$pdf->getMpdf()->WriteHTML('<pagebreak />');
 			$pdf->getMpdf()->WriteHTML($identitas_peserta_didik);
 			return $pdf->stream($general_title.'-IDENTITAS.pdf');
