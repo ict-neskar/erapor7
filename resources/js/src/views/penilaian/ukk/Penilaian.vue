@@ -176,13 +176,13 @@ export default {
       var predikat = ''
       if(item.nilai_ukk && item.nilai_ukk.nilai){
         var nilai = item.nilai_ukk.nilai
-        if (nilai > 90 && nilai <= 100) {
+        if (nilai >= 91 && nilai <= 100) {
             predikat = 'Sangat Kompeten';
         } else if (nilai >= 75 && nilai <= 90) {
             predikat = 'Kompeten';
         } else if (nilai >= 61 && nilai <= 74) {
             predikat = 'Cukup Kompeten';
-        } else if (nilai < 61) {
+        } else if (nilai <= 60) {
             predikat = 'Belum Kompeten';
         }
       }
