@@ -177,12 +177,16 @@ export default {
       if(item.nilai_ukk && item.nilai_ukk.nilai){
         var nilai = item.nilai_ukk.nilai
         if (nilai >= 91 && nilai <= 100) {
-            predikat = 'Sangat Kompeten';
-        } else if (nilai >= 75 && nilai <= 90) {
-            predikat = 'Kompeten';
-        } else if (nilai >= 61 && nilai <= 74) {
-            predikat = 'Cukup Kompeten';
-        } else if (nilai <= 60) {
+          // 91-100 sangat kompeten
+          predikat = 'Sangat Kompeten';
+        } else if (nilai >= 81 && nilai <= 90) {
+          // 81-90 kompeten
+          predikat = 'Kompeten';
+        } else if (nilai >= 70 && nilai <= 80) {
+          // 70-80 cukup kompeten 
+          predikat = 'Cukup Kompeten';
+        } else if (nilai <= 69) {
+          // 0-69 Belum kompeten
             predikat = 'Belum Kompeten';
         }
       }
