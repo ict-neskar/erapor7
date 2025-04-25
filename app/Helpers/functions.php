@@ -248,39 +248,25 @@ function keterangan_ukk($n, $lang = 'ID')
     if ($lang == 'ID') {
         if (!$n) {
             $predikat 	= '';
-        /*} elseif ($n >= 90) {
+        } elseif ($n > 90 && $n <= 100) {
             $predikat 	= 'Sangat Kompeten';
-        } elseif ($n >= 75 && $n <= 89) {
+        } elseif ($n >= 75 && $n <= 90) {
             $predikat 	= 'Kompeten';
-        } elseif ($n >= 70 && $n <= 74) {
+        } elseif ($n >= 61 && $n <= 74) {
             $predikat 	= 'Cukup Kompeten';
-        } elseif ($n < 70) {
-            $predikat 	= 'Belum Kompeten';
-        }*/
-        /*
-        0-69 = Belum Kompeten
-        70-100 = Kompeten
-        */
-        } elseif($n >= 70){
-            $predikat 	= 'Kompeten';
-        } else {
+        } elseif ($n < 61) {
             $predikat 	= 'Belum Kompeten';
         }
     } else {
         if (!$n) {
             $predikat 	= '';
-        /*} elseif ($n >= 90) {
+        } elseif ($n > 90 && $n <= 100) {
             $predikat 	= 'Highly Competent';
-        } elseif ($n >= 75 && $n <= 89) {
+        } elseif ($n >= 75 && $n <= 90) {
             $predikat 	= 'Competent';
-        } elseif ($n >= 70 && $n <= 74) {
+        } elseif ($n >= 61 && $n <= 74) {
             $predikat 	= 'Partly Competent';
-        } elseif ($n < 70) {
-            $predikat 	= 'Not Yet Competent';
-        }*/
-        } elseif($n >= 70){
-            $predikat 	= 'Competent';
-        } else {
+        } elseif ($n < 61) {
             $predikat 	= 'Not Yet Competent';
         }
     }
