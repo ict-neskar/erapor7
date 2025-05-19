@@ -535,7 +535,6 @@ function get_string_between($string, $start, $end){
     $len = strpos($string, $end, $ini) - $ini;
     return substr($string, $ini, $len);
 }
-<<<<<<< HEAD
 function getUpdaterID($sekolah_id, $npsn, $semester_id, $email){
     $updater_id = NULL;
     try {
@@ -588,5 +587,3 @@ function getMatev($sekolah_id, $npsn, $semester_id){
     }
     return $matev_rapor;
 }
-=======
->>>>>>> a409161 (Update functions.php)
