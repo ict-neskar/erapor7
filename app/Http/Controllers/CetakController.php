@@ -249,9 +249,12 @@ class CetakController extends Controller
 			}
 
 			// Override school's logo
-			if (Storage::disk('s3')->exists('neskar_logo.png')) {
-				$logo_sekolah = Storage::disk('s3')->url('neskar_logo.png');
-			}
+			// if (Storage::disk('s3')->exists('neskar_logo.png')) {
+			// 	$logo_sekolah = Storage::disk('s3')->url('neskar_logo.png');
+			// }
+				$logo_sekolah = ($get_siswa->rombongan_belajar->sekolah && $get_siswa->rombongan_belajar->sekolah->logo_sekolah)
+				? public_path('./storage'.config('erapor.storage').'/images/'.$get_siswa->rombongan_belajar->sekolah->logo_sekolah)
+				: public_path('./images/tutwuri.png');
 
 			// Remove school's logo for 2022 and below
 			$tahun_ajaran_prefix_raw = $get_siswa->peserta_didik->diterima ? Carbon::parse($get_siswa->peserta_didik->getAttributes()['diterima'])->format('Y') : '20'.substr($tahun_ajaran_id, 0, 2);
